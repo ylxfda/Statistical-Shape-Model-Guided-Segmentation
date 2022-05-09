@@ -1,0 +1,1 @@
+ADD_LIBRARY(SSWM Global Mynode Mytree Piont3D QTreeR Quadnode Quadtree SetList Surface gvfc)

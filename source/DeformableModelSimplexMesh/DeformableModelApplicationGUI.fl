@@ -1,0 +1,188 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0107 
+header_name {.h} 
+code_name {.cxx}
+decl {\#include <FL/Fl_File_Chooser.H>} {public
+} 
+
+decl {\#include <FL/Fl_Help_Dialog.H>} {public
+} 
+
+class DeformableModelApplicationGUI {open : {public DeformableModelApplicationBase}
+} {
+  Function {DeformableModelApplicationGUI()} {open selected
+  } {
+    Fl_Window mainWindow {
+      label {SSWM-Segmentation} open
+      xywh {216 99 870 820} type Double color 46 labelfont 1 resizable
+      code0 {\#include "DeformableModelApplicationBase.h"} visible
+    } {
+      Fl_Menu_Bar {} {open
+        xywh {0 0 870 20}
+      } {
+        Submenu {} {
+          label File open
+          xywh {0 0 100 20}
+        } {
+          MenuItem {} {
+            label {Load Image}
+            callback {this->Load();}
+            xywh {0 0 100 20}
+          }
+          MenuItem {} {
+            label {Load Preprocessed Image}
+            callback {this->LoadPreprocessed();}
+            xywh {15 15 100 20}
+          }
+          MenuItem {} {
+            label {Load Prior Model Mesh}
+            callback {this->LoadMesh();}
+            xywh {0 0 100 20}
+          }
+          MenuItem {} {
+            label {Load Coefficients}
+            callback {this->LoadCoefficients();}
+            xywh {10 10 100 20}
+          }
+          MenuItem {} {
+            label {Preprocess Image}
+            callback {this->ComputeInternalForces();}
+            xywh {0 0 100 20}
+          }
+          MenuItem {} {
+            label {Save Mesh}
+            callback {this->SaveMesh();}
+            xywh {0 0 100 20}
+          }
+          MenuItem {} {
+            label {Save Coefficients}
+            callback {this->SaveMask();}
+            xywh {0 0 100 20}
+          }
+          MenuItem {} {
+            label Quit
+            callback {this->Quit();}
+            xywh {0 0 100 20}
+          }
+        }
+        Submenu {} {
+          label Segmentation open
+          xywh {0 0 100 20}
+        } {
+          MenuItem {} {
+            label {Deform Mesh}
+            callback {this->DeformMesh();}
+            xywh {0 0 100 20}
+          }
+          MenuItem {} {
+            label {Show original/Show Preprocessed}
+            callback {this->ToggleImage();}
+            xywh {10 10 100 20}
+          }
+        }
+        Submenu {} {
+          label Help open
+          xywh {20 20 100 20}
+        } {
+          MenuItem {} {
+            label {How to use?}
+            callback {Fl_Help_Dialog  *help;    // Help dialog
+help = new Fl_Help_Dialog;
+help->load("how_to_use.html");
+help->show();}
+            xywh {0 0 100 20}
+          }
+          MenuItem {} {
+            label About
+            callback {m_AboutWindow->show();}
+            xywh {0 0 100 20}
+          }
+        }
+      }
+      Fl_Box axialView {
+        label Axial
+        xywh {0 20 420 375} box DOWN_FRAME labelfont 5 align 2
+        code0 {\#include "vtkFlRenderWindowInteractor.h"}
+        class vtkFlRenderWindowInteractor
+      }
+      Fl_Value_Slider axialViewSlider {
+        callback {this->SelectAxialSlice( static_cast<int>( o->value() ));}
+        xywh {420 20 20 375} maximum 100 step 1
+      }
+      Fl_Box coronalView {
+        label Coronal
+        xywh {445 20 400 375} box DOWN_FRAME labelfont 5 align 2
+        code0 {\#include "vtkFlRenderWindowInteractor.h"}
+        class vtkFlRenderWindowInteractor
+      }
+      Fl_Value_Slider coronalViewSlider {
+        callback {this->SelectCoronalSlice( static_cast<int>( o->value() ) );}
+        xywh {845 20 20 375} maximum 100 step 1
+      }
+      Fl_Box sagittalView {
+        label Sagittal
+        xywh {445 410 400 390} box DOWN_FRAME labelfont 5 align 2
+        code0 {\#include "vtkFlRenderWindowInteractor.h"}
+        class vtkFlRenderWindowInteractor
+      }
+      Fl_Value_Slider sagittalViewSlider {
+        callback {this->SelectSagittalSlice( static_cast<int>( o->value() ) );}
+        xywh {845 410 20 390} maximum 100 step 1
+      }
+      Fl_Box surfaceView {
+        label {Surface Mesh}
+        xywh {0 410 440 390} box DOWN_FRAME labelfont 5 align 2
+        code0 {\#include "vtkFlRenderWindowInteractor.h"}
+        class vtkFlRenderWindowInteractor
+      }
+    }
+    Fl_Window m_AboutWindow {
+      label {About }
+      callback {m_AboutWindow->hide();}
+      xywh {185 347 191 104} type Double color 47 hide resizable
+    } {
+      Fl_Text_Display m_TextDisplay {
+        xywh {-5 -5 285 170} color 47 resizable
+      }
+    }
+    code {m_TextBuffer.append("\\n            Li Yang\\n\\n   National University of Singapore\\n");
+m_TextDisplay->buffer(m_TextBuffer);} {}
+  }
+  Function {~DeformableModelApplicationGUI()} {return_type virtual
+  } {}
+  Function {Help()} {return_type {virtual void}
+  } {}
+  decl {Fl_Text_Buffer m_TextBuffer;} {}
+  Function {Quit()} {return_type {virtual void}
+  } {}
+  Function {SaveMask()} {return_type {virtual void}
+  } {}
+  Function {SaveMesh()} {return_type {virtual void}
+  } {}
+  Function {DeformMesh()} {return_type {virtual void}
+  } {}
+  Function {LoadMesh()} {return_type {virtual void}
+  } {}
+  Function {CreateMesh()} {return_type {virtual void}
+  } {}
+  Function {Load()} {return_type {virtual void}
+  } {}
+  Function {Show()} {open return_type {virtual void}
+  } {}
+  Function {Hide()} {open return_type {virtual void}
+  } {}
+  Function {SelectAxialSlice( int )} {open return_type {virtual void}
+  } {}
+  Function {SelectCoronalSlice( int )} {open return_type {virtual void}
+  } {}
+  Function {SelectSagittalSlice( int )} {return_type {virtual void}
+  } {}
+  Function {ComputeInternalForces()} {return_type {virtual void}
+  } {}
+  Function {LoadPreprocessed()} {open return_type {virtual void}
+  } {}
+  Function {ToggleImage()} {open return_type {virtual void}
+  } {}
+  Function {LoadCoefficients()} {return_type {virtual void}
+  } {}
+} 
